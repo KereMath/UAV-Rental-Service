@@ -5,11 +5,11 @@ services:
     image: postgres:13
     container_name: iha_kiralama_db
     environment:
-      POSTGRES_DB: iha_kiralama_db
-      POSTGRES_USER: django_user
-      POSTGRES_PASSWORD: pwd
+      POSTGRES_DB: new_iha_kiralama_db
+      POSTGRES_USER: new_django_user
+      POSTGRES_PASSWORD: new_password
     ports:
-      - "5433:5432"  # Ensure this port is available
+      - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     healthcheck:
@@ -17,25 +17,17 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
+
   web:
     build: .
-    command: >
-      sh -c "
-      python manage.py makemigrations &&
-      python manage.py migrate &&
-      python manage.py runserver 0.0.0.0:8000"
+    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/app
     ports:
-      - "8000:8000"
+      - "8001:8000"
     depends_on:
       db:
         condition: service_healthy
-    environment:
-      DB_NAME: iha_kiralama_db
-      DB_USER: django_user
-      DB_PASSWORD: pwd
-      DB_HOST: db
 
 volumes:
   postgres_data:

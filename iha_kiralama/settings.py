@@ -91,13 +91,14 @@ WSGI_APPLICATION = 'iha_kiralama.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('POSTGRES_DB', 'iha_kiralama_db'),
-        'USER': os.getenv('POSTGRES_USER', 'django_user'),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'pwd'),
-        'HOST': os.getenv('POSTGRES_HOST', 'localhost'),
+        'NAME': os.getenv('POSTGRES_DB', 'new_iha_kiralama_db'),
+        'USER': os.getenv('POSTGRES_USER', 'new_django_user'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'new_password'),
+        'HOST': os.getenv('POSTGRES_HOST', 'db'),
         'PORT': os.getenv('POSTGRES_PORT', '5432'),
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
