@@ -92,34 +92,40 @@
                     end_date: endDate
                 },
                 success: function(data) {
-                    $('#uav-list').empty();
-                    let brands = new Set();
-                    let prices = [];
-                    data.forEach(function(uav) {
-                        let price = uav.listing ? parseFloat(uav.listing.price).toFixed(2) : '0.00';
-                        let buttonHtml = uav.current_rental_status === 'pending' && uav.current_renter_id == userId ?
-                            `<button class="btn btn-warning cancel-btn" data-rental-id="${uav.current_rental_id}" data-uavid="${uav.id}" data-price="${price}">Cancel Pending</button>` :
-                            `<button class="btn btn-primary rent-btn" data-uavid="${uav.id}" data-price="${price}">Rent</button>`;
-                        let uavHtml = `<tr>
-                            <td>${uav.brand}</td>
-                            <td>${uav.model}</td>
-                            <td>${parseFloat(uav.weight).toFixed(2)}</td>
-                            <td>${uav.category}</td>
-                            <td>$${price}</td>
-                            <td><input type="date" class="form-control start-date"></td>
-                            <td><input type="date" class="form-control end-date"></td>
-                            <td class="total-price">-</td>
-                            <td>${buttonHtml}</td>
-                        </tr>`;
-                        $('#uav-list').append(uavHtml);
-                        brands.add(uav.brand);
-                        if (price !== '0.00') {
-                            prices.push(parseFloat(price));
-                        }
-                    });
-                    populateBrandFilter(brands);
-                    populatePriceFilter(prices);
-                }
+    $('#uav-list').empty();
+    let brands = new Set();
+    let prices = [];
+    data.forEach(function(uav) {
+        let price = uav.listing ? parseFloat(uav.listing.price).toFixed(2) : '0.00';
+        
+        // Skip UAVs with a price of 0
+        if (price === '0.00') {
+            return;
+        }
+
+        let buttonHtml = uav.current_rental_status === 'pending' && uav.current_renter_id == userId ?
+            `<button class="btn btn-warning cancel-btn" data-rental-id="${uav.current_rental_id}" data-uavid="${uav.id}" data-price="${price}">Cancel Pending</button>` :
+            `<button class="btn btn-primary rent-btn" data-uavid="${uav.id}" data-price="${price}">Rent</button>`;
+        let uavHtml = `<tr>
+            <td>${uav.brand}</td>
+            <td>${uav.model}</td>
+            <td>${parseFloat(uav.weight).toFixed(2)}</td>
+            <td>${uav.category}</td>
+            <td>$${price}</td>
+            <td><input type="date" class="form-control start-date"></td>
+            <td><input type="date" class="form-control end-date"></td>
+            <td class="total-price">-</td>
+            <td>${buttonHtml}</td>
+        </tr>`;
+        $('#uav-list').append(uavHtml);
+        brands.add(uav.brand);
+        if (price !== '0.00') {
+            prices.push(parseFloat(price));
+        }
+    });
+    populateBrandFilter(brands);
+    populatePriceFilter(prices);
+}
             });
         }
 
