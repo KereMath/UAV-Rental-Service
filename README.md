@@ -37,8 +37,7 @@ sudo docker-compose up --build
 ```
 After that just access this link via browser:
 
-http://0.0.0.0:8000/accounts/
-
+http://localhost:8001/accounts/
 
 ######################################
 # Project Structure
