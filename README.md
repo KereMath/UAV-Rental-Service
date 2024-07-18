@@ -26,6 +26,7 @@ Clone the repository to your local machine:
 ```bash
 git clone https://github.com/yourusername/uav-rental-service.git
 cd uav-rental-service
+# End of bash script
 Ensure Docker and Docker Compose are installed on your machine.
 
 ######################################
@@ -36,7 +37,7 @@ Build and start the containers:
 
 ```bash
 sudo docker-compose up --build
-
+# End of bash script
 
 ######################################
 # Project Structure
