@@ -30,7 +30,7 @@ Clone the repository to your local machine and Build and start the containers:
 
 git clone https://github.com/KereMath/UAV-Rental-Service.git
 
- cd UAV-Rental-Service/
+cd UAV-Rental-Service/
 
 sudo docker-compose up --build
 
