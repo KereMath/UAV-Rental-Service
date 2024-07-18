@@ -20,6 +20,20 @@ Welcome to the UAV Rental Service, a platform where users can rent or list UAVs 
 ## Getting Started
 
 ### Setting Up the Project
+Ensure Docker and Docker Compose are installed on your machine.
+
+
+Clone the repository to your local machine and Build and start the containers:
+
+
+```bash
+
+git clone https://github.com/yourusername/uav-rental-service.git
+cd uav-rental-service
+
+
+sudo docker-compose up --build  bash
+```
 
 ######################################
 # Project Structure
@@ -64,17 +78,5 @@ Welcome to the UAV Rental Service, a platform where users can rent or list UAVs 
 - **POST /accounts/api/rentals/{id}/cancel/**: Cancel a pending rental.
 
 
-Ensure Docker and Docker Compose are installed on your machine.
 
-
-Clone the repository to your local machine and Build and start the containers:
-
-
-```bash
-
-git clone https://github.com/yourusername/uav-rental-service.git
-cd uav-rental-service
-
-
-sudo docker-compose up --build '''
 
