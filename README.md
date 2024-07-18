@@ -28,7 +28,8 @@ Clone the repository to your local machine and Build and start the containers:
 
 ```bash
 
-git clone https://github.com/yourusername/uav-rental-service.git
+git clone https://github.com/KereMath/UAV-Rental-Service.git
+
 cd uav-rental-service
 
 
