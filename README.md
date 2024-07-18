@@ -35,6 +35,10 @@ git clone https://github.com/KereMath/UAV-Rental-Service.git
 sudo docker-compose up --build
 
 ```
+After that just access this link via browser:
+
+http://0.0.0.0:8000/accounts/
+
 
 ######################################
 # Project Structure
