@@ -138,6 +138,7 @@ from django.db.models import Subquery, OuterRef
 
 class ListedUAVsView(generics.ListAPIView):
     serializer_class = UAVSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         start_date = self.request.query_params.get('start_date', None)
@@ -162,6 +163,12 @@ class ListedUAVsView(generics.ListAPIView):
                         uav=OuterRef('pk'),
                         status__in=['pending', 'rented']
                     ).values('id')[:1]
+                ),
+                current_renter_id=Subquery(
+                    RentalRecord.objects.filter(
+                        uav=OuterRef('pk'),
+                        status='pending'
+                    ).values('user_id')[:1]
                 )
             )
         else:
@@ -177,8 +184,15 @@ class ListedUAVsView(generics.ListAPIView):
                         uav=OuterRef('pk'),
                         status__in=['pending', 'rented']
                     ).values('id')[:1]
+                ),
+                current_renter_id=Subquery(
+                    RentalRecord.objects.filter(
+                        uav=OuterRef('pk'),
+                        status='pending'
+                    ).values('user_id')[:1]
                 )
             )
+
 
 
     from rest_framework import status, viewsets, permissions
@@ -189,6 +203,9 @@ from .serializers import RentalRecordSerializer, UAVSerializer
 from django.utils.timezone import now
 from datetime import timedelta
 from rest_framework.decorators import api_view, permission_classes
+
+
+
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def rent_uav(request):
@@ -220,6 +237,8 @@ def rent_uav(request):
         return Response({"error": "UAV not found."}, status=status.HTTP_404_NOT_FOUND)
     except Exception as e:
         return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
 @api_view(['GET'])
 def check_rental_status(request, rental_id):
     try:
@@ -238,7 +257,9 @@ def update_rental_status(request, rental_id):
     except RentalRecord.DoesNotExist:
         return Response({'error': 'Rental record not found'}, status=status.HTTP_404_NOT_FOUND)
 
+
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def cancel_rental(request, rental_id):
     try:
         rental = RentalRecord.objects.get(id=rental_id, user=request.user, status='pending')
@@ -246,7 +267,6 @@ def cancel_rental(request, rental_id):
         return Response({'message': 'Rental cancelled successfully'}, status=status.HTTP_204_NO_CONTENT)
     except RentalRecord.DoesNotExist:
         return Response({'error': 'Rental record not found or not cancellable'}, status=status.HTTP_404_NOT_FOUND)
-
 
 class RentalRecordListView(generics.ListAPIView):
     serializer_class = RentalRecordSerializer
@@ -279,17 +299,12 @@ class AllRentalRecordsView(generics.ListAPIView):
     def get_queryset(self):
         return RentalRecord.objects.filter(uav__owner=self.request.user).order_by('-start_date')    
     
-
-
 class UserRentalRecordsView(generics.ListAPIView):
     serializer_class = RentalRecordSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return RentalRecord.objects.filter(user=self.request.user).order_by('-start_date')    
-    
-
-
+        return RentalRecord.objects.filter(user=self.request.user).order_by('-start_date')
 
 
 from django.contrib.auth import update_session_auth_hash
