@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to UAV Rental Service</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        h1 {
+            color: #074173;
+        }
+        .btn-primary {
+            background-color: #2e88bf;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #074173;
+        }
+        .lead, p {
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container text-center mt-5">
+        <h1>Welcome to UAV Rental Service</h1>
+        <p class="lead">Rent or List the Best UAVs for Your Needs!</p>
+        <p>Whether you're looking to rent top-quality UAVs or want to list your own for others to rent, we’ve got you covered. Join our community today and experience the convenience and flexibility of UAV rentals.</p>
+        <div class="mt-4">
+            <a href="{% url 'register' %}" class="btn btn-primary btn-lg mr-2">Register</a>
+            <a href="{% url 'login' %}" class="btn btn-secondary btn-lg">Login</a>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
